@@ -1,6 +1,7 @@
 package eu.virtusdevelops.ldmontage.domain.work;
 
 
+import eu.virtusdevelops.ldmontage.domain.location.GPSLocation;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,11 +33,27 @@ public class Break {
     @JoinColumn(name = "worktime_id")
     private WorkTime workTime;
 
+    @Enumerated(EnumType.ORDINAL)
+    private BreakType breakType;
     @OneToMany(mappedBy = "break", cascade = CascadeType.ALL)
     List<BreakAuditLog> auditLog;
 
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="latitude", column=@Column(name="start_latitude")),
+            @AttributeOverride(name="longitude", column=@Column(name="start_longitude")),
+            @AttributeOverride(name="recordedTime", column=@Column(name="start_location_time"))
+    })
+    private GPSLocation startLocation;
 
-    // TODO: start and end locations
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="latitude", column=@Column(name="end_latitude")),
+            @AttributeOverride(name="longitude", column=@Column(name="end_longitude")),
+            @AttributeOverride(name="recordedTime", column=@Column(name="end_location_time"))
+    })
+    private GPSLocation endLocation;
 
 
     // datetime stuff

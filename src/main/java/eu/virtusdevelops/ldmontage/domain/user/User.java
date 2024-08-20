@@ -2,6 +2,7 @@ package eu.virtusdevelops.ldmontage.domain.user;
 
 import eu.virtusdevelops.ldmontage.domain.permission.Permission;
 import eu.virtusdevelops.ldmontage.domain.permission.Role;
+import eu.virtusdevelops.ldmontage.domain.work.WorkTime;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -108,6 +109,11 @@ public class User implements UserDetails {
         return authorities;
 
     }
+
+    // work times
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<WorkTime> workTimers = new HashSet<>();
 
 
     // datetime stuff
