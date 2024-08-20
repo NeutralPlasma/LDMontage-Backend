@@ -15,12 +15,9 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class WorkController {
 
-
-    // create get, put, patch, delete methods
-
-
-
     private final WorkService workService;
+
+
 
 
     @GetMapping("/{id}")

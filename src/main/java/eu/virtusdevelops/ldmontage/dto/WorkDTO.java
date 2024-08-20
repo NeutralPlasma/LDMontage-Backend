@@ -1,4 +1,13 @@
 package eu.virtusdevelops.ldmontage.dto;
 
-public record WorkDTO() {
+import java.util.Date;
+import java.util.List;
+
+public record WorkDTO(
+        long id,
+        String title,
+        List<WorkSiteDTO> sites,
+        Date createdAt,
+        Date updatedAt
+) {
 }

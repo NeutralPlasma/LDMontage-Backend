@@ -25,13 +25,13 @@ public class WorkSite {
 
     private String title;
     private String description;
-    private float latitude;
-    private float longitude;
+    private double latitude;
+    private double longitude;
 
 
 
     @EqualsAndHashCode.Exclude
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "worksite_user",
             joinColumns = {@JoinColumn(name = "worksite_id", referencedColumnName = "id")},
