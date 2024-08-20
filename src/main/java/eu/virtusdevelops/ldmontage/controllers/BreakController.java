@@ -1,10 +1,7 @@
 package eu.virtusdevelops.ldmontage.controllers;
 
-import eu.virtusdevelops.ldmontage.domain.exceptions.BreakAlreadyEndedException;
-import eu.virtusdevelops.ldmontage.domain.exceptions.BreakNotFoundException;
 import eu.virtusdevelops.ldmontage.dto.BreakDTO;
 import eu.virtusdevelops.ldmontage.mappers.BreakDTOMapper;
-import eu.virtusdevelops.ldmontage.repositories.BreakRepository;
 import eu.virtusdevelops.ldmontage.requests.BreakEndRequest;
 import eu.virtusdevelops.ldmontage.requests.BreakStartRequest;
 import eu.virtusdevelops.ldmontage.services.WorkBreakService;
@@ -13,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 
 @RestController
 @RequestMapping("/api/v1/break")

@@ -64,7 +64,7 @@ public class WorkBreakService {
      * throws exceptions if not found
      * @param breakId id of the break to delete
      */
-    @PreAuthorize("@breakMiddleware.canDelete(breakId)")
+    @PreAuthorize("@breakMiddleware.canDelete(breakId) OR hasAnyRole('ROLE_MODERATOR', 'ROLE_ADMIN')")
     public void deleteBreak(Long breakId){
         var breakOpt = breakRepository.findById(breakId);
         if (breakOpt.isEmpty()) {
@@ -80,7 +80,7 @@ public class WorkBreakService {
      * @param breakObj updated object
      * @return updated break
      */
-    @Secured({"ROLE_MODERATOR", "ROLE_ADMIN"})
+    @PreAuthorize("hasAnyRole('ROLE_MODERATOR', 'ROLE_ADMIN')")
     public Break updateBreak(long breakId, BreakDTO breakObj){
         // get original, compare and update
 
@@ -94,7 +94,7 @@ public class WorkBreakService {
      * @param breakObj n
      * @return updated break
      */
-    @Secured({"ROLE_MODERATOR", "ROLE_ADMIN"})
+    @PreAuthorize("hasAnyRole('ROLE_MODERATOR', 'ROLE_ADMIN')")
     public Break patchBreak(long breakId, BreakDTO breakObj){
 
         return null; //breakRepository.save(breakObj);
