@@ -10,6 +10,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 
@@ -29,14 +30,16 @@ public class WorkTime {
     private Date endTime;
 
 
-    // TODO: start and end locations
 
 
     // all breaks
-    @OneToMany(mappedBy = "worktime")
+    @OneToMany(mappedBy = "worktime", cascade = CascadeType.ALL)
     Set<Break> breaks;
 
 
+
+    @OneToMany(mappedBy = "worktime", cascade = CascadeType.ALL)
+    List<WorkTimeAuditLog> auditLog;
 
 
     // datetime stuff

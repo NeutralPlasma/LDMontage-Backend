@@ -70,7 +70,7 @@ public class User implements UserDetails {
 
 
     // permissions
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_permissions",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
@@ -78,7 +78,7 @@ public class User implements UserDetails {
     )
     private List<Permission> permissions;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
