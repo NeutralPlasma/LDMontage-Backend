@@ -4,6 +4,7 @@ import eu.virtusdevelops.ldmontage.domain.exceptions.BreakAlreadyEndedException;
 import eu.virtusdevelops.ldmontage.domain.exceptions.BreakNotFoundException;
 import eu.virtusdevelops.ldmontage.domain.work.Break;
 import eu.virtusdevelops.ldmontage.dto.BreakDTO;
+import eu.virtusdevelops.ldmontage.repositories.BreakAuditLogRepository;
 import eu.virtusdevelops.ldmontage.repositories.BreakRepository;
 import eu.virtusdevelops.ldmontage.requests.BreakEndRequest;
 import eu.virtusdevelops.ldmontage.requests.BreakStartRequest;
@@ -18,6 +19,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class WorkBreakService {
     private final BreakRepository breakRepository;
+    private final BreakAuditLogRepository breakAuditLogRepository;
 
 
     public Break startBreak(BreakStartRequest request){
@@ -84,13 +86,14 @@ public class WorkBreakService {
     public Break updateBreak(long breakId, BreakDTO breakObj){
         // get original, compare and update
 
+        // add audit log to breakauditlog
 
         return null; //breakRepository.save(breakObj);
     }
 
     /**
      * TODO!
-     * Partialy updates data (not all data is changed)
+     * Partially updates data (not all data is changed)
      * @param breakObj n
      * @return updated break
      */
