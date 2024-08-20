@@ -7,6 +7,7 @@ import eu.virtusdevelops.ldmontage.domain.user.User;
 import eu.virtusdevelops.ldmontage.repositories.SessionTokenRepository;
 import eu.virtusdevelops.ldmontage.repositories.UserRepository;
 import eu.virtusdevelops.ldmontage.requests.LoginRequest;
+import eu.virtusdevelops.ldmontage.requests.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.util.StandardSessionIdGenerator;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -47,6 +48,36 @@ public class AuthenticationService {
         var sessionId = sessionIdGenerator.generateSessionId();
         var token = saveUserToken(user, sessionId);
         return new LoginData(user, token);
+    }
+
+    /**
+     * Tries to register new users,
+     * throws errors if username already exists
+     * @param request register request
+     * @return the new registered user
+     */
+    public User register(RegisterRequest request) {
+        // TODO
+
+        var userOptional = userRepository.findByEmail(request.email());
+        if (userOptional.isPresent()) {
+            throw new IllegalStateException("Email already taken");
+        }
+
+
+        var user = User.builder()
+                .email(request.email())
+                .password(passwordEncoder.encode(request.password()))
+                .firstName(request.firstName())
+                .lastName(request.lastName())
+                .phone(request.phoneNumber())
+                .birthDate(request.birthDate())
+                .build();
+        userRepository.save(user);
+
+        // todo: mail sending service and send email
+
+        return user;
     }
 
     /**
