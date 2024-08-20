@@ -7,14 +7,11 @@ import eu.virtusdevelops.ldmontage.mappers.BreakDTOMapper;
 import eu.virtusdevelops.ldmontage.repositories.BreakRepository;
 import eu.virtusdevelops.ldmontage.requests.BreakEndRequest;
 import eu.virtusdevelops.ldmontage.requests.BreakStartRequest;
-import eu.virtusdevelops.ldmontage.requests.LoginRequest;
+import eu.virtusdevelops.ldmontage.services.WorkBreakService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.Date;
 
@@ -23,8 +20,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class BreakController {
 
-    private final BreakRepository breakRepository;
-
+    private final WorkBreakService breakService;
     private final BreakDTOMapper breakDTOMapper;
 
 
@@ -32,15 +28,8 @@ public class BreakController {
     public ResponseEntity<BreakDTO> startBreak(
             @Valid @RequestBody BreakStartRequest request
     ) {
-        // TODO
-        // - check if user is currently working
-        // - get users active work
-        // - check that user isn't already on break
-        // - check locations
-        // - create new break
-
-
-        return ResponseEntity.ok(new BreakDTO());
+        var breakObj = breakService.startBreak(request);
+        return ResponseEntity.ok(breakDTOMapper.apply(breakObj));
     }
 
 
@@ -49,23 +38,34 @@ public class BreakController {
             @PathVariable(name = "break_id") Long breakId,
             @Valid @RequestBody BreakEndRequest request
     ) {
-        var breakOpt = breakRepository.findById(breakId);
-        if (breakOpt.isEmpty()) {
-            throw new BreakNotFoundException(breakId);
-        }
-
-        var breakObj = breakOpt.get();
-        if(breakObj.getEndTime() != null) {
-            throw new BreakAlreadyEndedException(breakId);
-        }
-
-        // TODO: update locations
-        breakObj.setEndTime(new Date());
-
-
-        breakObj = breakRepository.save(breakObj);
-
-
+        var breakObj = breakService.stopBreak(breakId, request);
         return ResponseEntity.ok(breakDTOMapper.apply(breakObj));
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBreak(
+            @PathVariable Long id
+    ){
+        breakService.deleteBreak(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<BreakDTO> put(
+            @PathVariable Long id,
+            @Valid @RequestBody BreakDTO data
+    ){
+        breakService.updateBreak(id, data);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<BreakDTO> patch(
+            @PathVariable Long id,
+            @Valid @RequestBody BreakDTO data
+    ){
+        breakService.patchBreak(id, data);
+        return ResponseEntity.noContent().build();
     }
 }

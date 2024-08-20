@@ -2,6 +2,7 @@ package eu.virtusdevelops.ldmontage.services;
 
 
 import eu.virtusdevelops.ldmontage.domain.auth.LoginData;
+import eu.virtusdevelops.ldmontage.domain.exceptions.UsernameTakenException;
 import eu.virtusdevelops.ldmontage.domain.token.SessionToken;
 import eu.virtusdevelops.ldmontage.domain.user.User;
 import eu.virtusdevelops.ldmontage.repositories.SessionTokenRepository;
@@ -61,7 +62,7 @@ public class AuthenticationService {
 
         var userOptional = userRepository.findByEmail(request.email());
         if (userOptional.isPresent()) {
-            throw new IllegalStateException("Email already taken");
+            throw new UsernameTakenException(request.email());
         }
 
 

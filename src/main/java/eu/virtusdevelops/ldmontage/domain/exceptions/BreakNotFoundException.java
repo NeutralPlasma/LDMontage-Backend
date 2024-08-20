@@ -1,5 +1,8 @@
 package eu.virtusdevelops.ldmontage.domain.exceptions;
 
+import lombok.Getter;
+
+@Getter
 public class BreakNotFoundException extends RuntimeException {
     private final long breakId;
     public BreakNotFoundException(long breakId) {
@@ -7,7 +10,4 @@ public class BreakNotFoundException extends RuntimeException {
         this.breakId = breakId;
     }
 
-    public long getBreakId() {
-        return breakId;
-    }
 }
