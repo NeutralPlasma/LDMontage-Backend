@@ -25,25 +25,25 @@ public class WorkController {
 
     @GetMapping("/{id}")
     public ResponseEntity<WorkDTO> getWorkById(@PathVariable Long id) {
-
+        return null;
     }
 
 
     @GetMapping
     public ResponseEntity<List<WorkDTO>> getAllWorks() {
-
+        return null;
     }
 
 
     @PutMapping("/{id}")
     public ResponseEntity<WorkDTO> updateWork(@PathVariable Long id, @RequestBody WorkDTO workDetails) {
-
+        return null;
     }
 
 
     @PatchMapping("/{id}")
     public ResponseEntity<WorkDTO> partiallyUpdateWork(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
-
+        return null;
     }
 
 

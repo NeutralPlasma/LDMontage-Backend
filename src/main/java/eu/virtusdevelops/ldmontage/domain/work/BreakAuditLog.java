@@ -37,6 +37,7 @@ public class BreakAuditLog {
 
     // datetime stuff
     @CreatedDate
+    @Builder.Default
     @Column(nullable = false, updatable = false)
     private Date createdAt = new Date();
 

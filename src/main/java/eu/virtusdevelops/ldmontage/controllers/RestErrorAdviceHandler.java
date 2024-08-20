@@ -110,9 +110,6 @@ public class RestErrorAdviceHandler extends ResponseEntityExceptionHandler{
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> handleAll(Exception ex, WebRequest request) {
-
-        ex.printStackTrace();
-
         GenericApiError apiError = new GenericApiError(
                 HttpStatus.INTERNAL_SERVER_ERROR, "error occurred");
         return new ResponseEntity<>(

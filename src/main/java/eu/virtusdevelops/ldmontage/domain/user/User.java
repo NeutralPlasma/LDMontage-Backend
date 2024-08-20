@@ -78,6 +78,8 @@ public class User implements UserDetails {
     )
     private List<Permission> permissions;
 
+
+    @Builder.Default
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
@@ -109,9 +111,11 @@ public class User implements UserDetails {
 
 
     // datetime stuff
+    @Builder.Default
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private Date createdAt = new Date();
+    @Builder.Default
     @LastModifiedDate
     private Date updatedAt = new Date();
 

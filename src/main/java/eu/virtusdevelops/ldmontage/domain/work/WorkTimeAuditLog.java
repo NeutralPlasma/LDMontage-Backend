@@ -39,11 +39,6 @@ public class WorkTimeAuditLog {
     // datetime stuff
     @CreatedDate
     @Column(nullable = false, updatable = false)
-    private Date createdAt = new Date();
-
-    @PrePersist
-    protected void prePersist() {
-        if (this.createdAt == null) createdAt = new Date();
-    }
+    private final Date createdAt = new Date();
 
 }

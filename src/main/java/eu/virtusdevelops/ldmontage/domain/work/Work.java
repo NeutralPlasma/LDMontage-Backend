@@ -32,9 +32,11 @@ public class Work {
 
 
     // datetime stuff
+    @Builder.Default
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private Date createdAt = new Date();
+    @Builder.Default
     @LastModifiedDate
     private Date updatedAt = new Date();
 
