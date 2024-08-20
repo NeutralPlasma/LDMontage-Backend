@@ -28,17 +28,15 @@ public class GenericApiError {
         this.status = status.value();
         this.error = status;
         errors = new HashMap<>();
-        errors.put("general", new ArrayList<>());
-        errors.get("general").add(error);
+        addError(error);
     }
 
     public GenericApiError(HttpStatus status, List<String> errors) {
         this.status = status.value();
         this.error = status;
         this.errors = new HashMap<>();
-        this.errors.put("general", new ArrayList<>());
         for (String error : errors)
-            this.errors.get("general").add(error);
+            addError(error);
     }
 
     public void addError(String key, String error) {
@@ -47,7 +45,7 @@ public class GenericApiError {
     }
 
     public void addError(String error) {
-        errors.get("general").add(error);
+        addError("general", error);
     }
 
 }
