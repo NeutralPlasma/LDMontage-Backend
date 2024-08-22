@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 
 public record WorkSiteCreateRequest(
-        @NotEmpty(message = "Work title can not be empty")
+        @NotEmpty(message = "Work site title can not be empty")
         String title,
 
         String description,
