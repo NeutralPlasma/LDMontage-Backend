@@ -1,5 +1,6 @@
 package eu.virtusdevelops.ldmontage.requests;
 
+import eu.virtusdevelops.ldmontage.validation.DateInPast;
 import eu.virtusdevelops.ldmontage.validation.FieldMatch;
 import eu.virtusdevelops.ldmontage.validation.PhoneNumber;
 import jakarta.validation.constraints.Email;
@@ -25,7 +26,7 @@ public record RegisterRequest(
         @NotEmpty(message = "Lastname can not be empty.")
         String lastName,
 
-
+        @DateInPast(daysOffset = 365*15) // at least 15 years old
         Date birthDate,
 
         @NotEmpty(message = "Phone number can not be empty.")
