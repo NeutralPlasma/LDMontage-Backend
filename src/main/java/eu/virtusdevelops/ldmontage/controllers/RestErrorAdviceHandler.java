@@ -1,6 +1,7 @@
 package eu.virtusdevelops.ldmontage.controllers;
 
 import eu.virtusdevelops.ldmontage.domain.error.GenericApiError;
+import eu.virtusdevelops.ldmontage.domain.exceptions.NotFoundException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -125,7 +126,14 @@ public class RestErrorAdviceHandler extends ResponseEntityExceptionHandler{
                 new HttpHeaders(), HttpStatus.FORBIDDEN);
     }
 
-
+    @ExceptionHandler({NotFoundException.class})
+    public ResponseEntity<Object> handleAccessDeniedException(
+            NotFoundException ex, WebRequest request) {
+        return new ResponseEntity<>(
+                new GenericApiError(HttpStatus.NOT_FOUND,
+                        ex.getMessage()),
+                new HttpHeaders(), HttpStatus.NOT_FOUND);
+    }
 
 
 

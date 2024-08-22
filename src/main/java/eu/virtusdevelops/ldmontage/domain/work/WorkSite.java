@@ -40,6 +40,9 @@ public class WorkSite {
     Set<User> authorizedWorkers;
 
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Work work;
+
 
     // datetime stuff
     @Builder.Default
