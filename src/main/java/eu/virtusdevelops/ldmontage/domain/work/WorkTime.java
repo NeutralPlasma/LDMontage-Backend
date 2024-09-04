@@ -58,6 +58,10 @@ public class WorkTime {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "worksite_id")
+    private WorkSite workSite;
+
     @OneToMany(mappedBy = "worktime", cascade = CascadeType.ALL)
     List<WorkTimeAuditLog> auditLog;
 
