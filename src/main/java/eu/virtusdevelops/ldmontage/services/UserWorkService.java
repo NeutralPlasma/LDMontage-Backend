@@ -38,7 +38,7 @@ public class UserWorkService {
             // get all user's breaks by day
             // mark edited hours with different color
             // write table to pdf
-            // create temporary file thats valid for 10 days
+            // create temporary file that's valid for 10 days
             // create background service that cleans files older than 10 days
             // create new entity for temporary files
 
