@@ -1,6 +1,5 @@
 package eu.virtusdevelops.ldmontage.controllers;
 
-import eu.virtusdevelops.ldmontage.domain.work.WorkSite;
 import eu.virtusdevelops.ldmontage.dto.WorkSiteDTO;
 import eu.virtusdevelops.ldmontage.mappers.WorkSiteDTOMapper;
 import eu.virtusdevelops.ldmontage.requests.WorkSiteCreateRequest;

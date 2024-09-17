@@ -51,6 +51,7 @@ public class SecurityConfig {
                 ).authorizeHttpRequests(a -> a
 //                        .requestMatchers("/ws").permitAll() // web socket
                                 .requestMatchers("/api/v1/auth/**").permitAll() // auth
+                                .requestMatchers("/api/v1/admin/**").hasRole("ADMIN") // admin only
                                 .anyRequest().authenticated()
 
                 ).authenticationProvider(authenticationProvider)

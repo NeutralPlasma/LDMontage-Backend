@@ -3,6 +3,7 @@ package eu.virtusdevelops.ldmontage.services;
 
 import eu.virtusdevelops.ldmontage.domain.exceptions.NoWorkTimeInProgressException;
 import eu.virtusdevelops.ldmontage.domain.exceptions.WorkSiteNotFoundException;
+import eu.virtusdevelops.ldmontage.domain.exceptions.WorkTimeNotFound;
 import eu.virtusdevelops.ldmontage.domain.exceptions.WorktimeAlreadyInProgressException;
 import eu.virtusdevelops.ldmontage.domain.location.GPSLocation;
 import eu.virtusdevelops.ldmontage.domain.user.User;
@@ -87,6 +88,15 @@ public class WorkTimeService {
         
         return workTimeRepository.save(currentWorkTime);
 
+    }
+
+    public void deleteWorkTime(long id){
+
+        var workTimeOpt = workTimeRepository.findById(id);
+        if(workTimeOpt.isEmpty())
+            throw new WorkTimeNotFound(id);
+
+        workTimeRepository.delete(workTimeOpt.get());
     }
 
 }
