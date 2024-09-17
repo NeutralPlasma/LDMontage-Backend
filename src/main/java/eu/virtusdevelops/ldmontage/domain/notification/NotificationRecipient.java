@@ -31,9 +31,11 @@ public class NotificationRecipient {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User receiver;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "notification_id")
     private Notification notification;
 
 

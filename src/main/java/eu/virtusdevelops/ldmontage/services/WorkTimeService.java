@@ -30,7 +30,6 @@ public class WorkTimeService {
     private final WorkRepository workRepository;
 
 
-    // todo authorize user can work at specific work loc
     @PreAuthorize("@workMiddleware.canWorkAtLocation(request.worksiteId())")
     public WorkTime startWork(WorkTimeStartRequest request){
         var user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -98,5 +97,6 @@ public class WorkTimeService {
 
         workTimeRepository.delete(workTimeOpt.get());
     }
+
 
 }
