@@ -32,6 +32,11 @@ public class Notification {
     // if notification was/is also sent over email
     private boolean email;
 
+    // if notification was sent or not
+    private boolean sent;
+    // if notification was sent over email or not
+    private boolean emailSent;
+
 
     // list of recipients that tracks if user read the message or no
 
