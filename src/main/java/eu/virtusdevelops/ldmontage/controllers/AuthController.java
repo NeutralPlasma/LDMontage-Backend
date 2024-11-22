@@ -6,7 +6,7 @@ import eu.virtusdevelops.ldmontage.mappers.UserDTOMapper;
 import eu.virtusdevelops.ldmontage.middleware.CookieAuthenticationFilter;
 import eu.virtusdevelops.ldmontage.requests.LoginRequest;
 import eu.virtusdevelops.ldmontage.requests.RegisterRequest;
-import eu.virtusdevelops.ldmontage.services.AuthenticationService;
+import eu.virtusdevelops.ldmontage.services.implementations.AuthenticationServiceImpl;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -26,7 +26,7 @@ import java.time.temporal.ChronoUnit;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthenticationService authenticationService;
+    private final AuthenticationServiceImpl authenticationService;
     private final UserDTOMapper userDTOMapper;
 
 

@@ -4,7 +4,7 @@ import eu.virtusdevelops.ldmontage.dto.WorkTimeDTO;
 import eu.virtusdevelops.ldmontage.mappers.WorkTimeDTOMapper;
 import eu.virtusdevelops.ldmontage.requests.WorkTimeEndRequest;
 import eu.virtusdevelops.ldmontage.requests.WorkTimeStartRequest;
-import eu.virtusdevelops.ldmontage.services.WorkTimeService;
+import eu.virtusdevelops.ldmontage.services.implementations.WorkTimeServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/worktime")
 public class WorkTimeController {
 
-    private final WorkTimeService workTimeService;
+    private final WorkTimeServiceImpl workTimeService;
     private final WorkTimeDTOMapper workTimeDTOMapper;
     // delete
     // update

@@ -3,7 +3,7 @@ package eu.virtusdevelops.ldmontage.controllers;
 import eu.virtusdevelops.ldmontage.dto.WorkSiteDTO;
 import eu.virtusdevelops.ldmontage.mappers.WorkSiteDTOMapper;
 import eu.virtusdevelops.ldmontage.requests.WorkSiteCreateRequest;
-import eu.virtusdevelops.ldmontage.services.WorkSiteService;
+import eu.virtusdevelops.ldmontage.services.implementations.WorkSiteServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import java.util.UUID;
 @RequestMapping("/api/v1/worksite")
 @RequiredArgsConstructor
 public class WorkSiteController {
-    private final WorkSiteService workSiteService;
+    private final WorkSiteServiceImpl workSiteService;
     private final WorkSiteDTOMapper workSiteDTOMapper;
 
     // update

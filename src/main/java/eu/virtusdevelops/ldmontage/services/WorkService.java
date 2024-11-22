@@ -1,32 +1,27 @@
 package eu.virtusdevelops.ldmontage.services;
 
-import eu.virtusdevelops.ldmontage.domain.exceptions.WorkNotFoundException;
 import eu.virtusdevelops.ldmontage.domain.work.Work;
-import eu.virtusdevelops.ldmontage.repositories.WorkRepository;
 import eu.virtusdevelops.ldmontage.requests.WorkCreateRequest;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-@Service
-@RequiredArgsConstructor
-public class WorkService {
-    private final WorkRepository workRepository;
+public interface WorkService {
 
-    public Work getWork(long id) {
-        return workRepository.findById(id)
-                .orElseThrow(() -> new WorkNotFoundException(id));
-    }
+    /**
+     * Gets work by its id
+     * @param id of the work
+     * @return Work
+     */
+    Work getWork(long id);
 
-    public Work createWork(WorkCreateRequest request) {
-        var work = Work.builder()
-                .title(request.title())
-                .build();
+    /**
+     * Creates new work based on the data passed by request
+     * @param request data for the new work
+     * @return newly created work
+     */
+    Work createWork(WorkCreateRequest request);
 
-        return workRepository.save(work);
-    }
-
-    public void deleteWork(long id) {
-        var work = getWork(id); // Reuse getWork for consistency and avoiding duplicate lookup logic
-        workRepository.delete(work);
-    }
+    /**
+     * Deletes existing work
+     * @param id of the work you wish to delete
+     */
+    void deleteWork(long id);
 }
