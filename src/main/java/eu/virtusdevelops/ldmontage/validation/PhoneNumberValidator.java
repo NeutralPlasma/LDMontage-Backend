@@ -18,7 +18,7 @@ public class PhoneNumberValidator implements ConstraintValidator<PhoneNumber, St
 
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
         try {
-            phoneUtil.parse(phoneNumber, "SI");
+            phoneUtil.parse(phoneNumber, "SK");
             return true;
         } catch (Exception e) {
             return false;

@@ -36,6 +36,7 @@ public class Notification {
     // list of recipients that tracks if user read the message or no
 
     @OneToMany(mappedBy = "notification")
+    @Builder.Default
     private Set<NotificationRecipient> recipients = new HashSet<>();
 
 

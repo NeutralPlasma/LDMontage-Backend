@@ -8,8 +8,7 @@ import eu.virtusdevelops.ldmontage.domain.work.BreakAuditLog;
 import eu.virtusdevelops.ldmontage.dto.BreakDTO;
 import eu.virtusdevelops.ldmontage.repositories.BreakAuditLogRepository;
 import eu.virtusdevelops.ldmontage.repositories.BreakRepository;
-import eu.virtusdevelops.ldmontage.requests.BreakEndRequest;
-import eu.virtusdevelops.ldmontage.requests.BreakStartRequest;
+import eu.virtusdevelops.ldmontage.requests.BreakRequest;
 import eu.virtusdevelops.ldmontage.services.WorkBreakService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,7 @@ public class WorkBreakServiceImpl implements WorkBreakService {
 
 
     @Override
-    public Break startBreak(BreakStartRequest request) {
+    public Break startBreak(BreakRequest request) {
         // TODO
         // - check if user is currently working
         // - get users active work
@@ -45,7 +44,7 @@ public class WorkBreakServiceImpl implements WorkBreakService {
      * @return break object
      */
     @Override
-    public Break stopBreak(Long breakId, BreakEndRequest request) {
+    public Break stopBreak(Long breakId, BreakRequest request) {
         var breakOpt = breakRepository.findById(breakId);
         if (breakOpt.isEmpty()) {
             throw new BreakNotFoundException(breakId);

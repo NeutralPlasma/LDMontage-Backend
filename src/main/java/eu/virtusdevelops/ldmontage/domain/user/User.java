@@ -110,6 +110,7 @@ public class User implements UserDetails {
     // work times
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private Set<WorkTime> workTimers = new HashSet<>();
 
 

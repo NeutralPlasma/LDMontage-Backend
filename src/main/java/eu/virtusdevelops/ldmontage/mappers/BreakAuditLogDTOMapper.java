@@ -20,7 +20,7 @@ public class BreakAuditLogDTOMapper implements Function<BreakAuditLog, BreakAudi
                 auditLog.getFieldName(),
                 auditLog.getOldValue(),
                 auditLog.getNewValue(),
-                userDTOMapper.apply(auditLog.getModifiedBy()),
+                auditLog.getModifiedBy() != null ? userDTOMapper.apply(auditLog.getModifiedBy()) : null,
                 auditLog.getCreatedAt()
         );
     }

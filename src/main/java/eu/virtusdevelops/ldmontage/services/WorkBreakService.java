@@ -2,8 +2,7 @@ package eu.virtusdevelops.ldmontage.services;
 
 import eu.virtusdevelops.ldmontage.domain.work.Break;
 import eu.virtusdevelops.ldmontage.dto.BreakDTO;
-import eu.virtusdevelops.ldmontage.requests.BreakEndRequest;
-import eu.virtusdevelops.ldmontage.requests.BreakStartRequest;
+import eu.virtusdevelops.ldmontage.requests.BreakRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 public interface WorkBreakService {
@@ -14,7 +13,7 @@ public interface WorkBreakService {
      * @param request parameters for new break
      * @return newly started break
      */
-    Break startBreak(BreakStartRequest request);
+    Break startBreak(BreakRequest request);
 
     /**
      * Stops existing break (ends it)
@@ -23,7 +22,7 @@ public interface WorkBreakService {
      * @param request request containing end location
      * @return ended break
      */
-    Break stopBreak(Long breakId, BreakEndRequest request);
+    Break stopBreak(Long breakId, BreakRequest request);
 
     /**
      * Deletes existing break

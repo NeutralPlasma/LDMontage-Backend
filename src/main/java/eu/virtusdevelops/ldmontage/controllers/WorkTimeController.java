@@ -22,7 +22,6 @@ public class WorkTimeController {
     // update
     // patch
 
-
     @PostMapping("/start")
     public ResponseEntity<WorkTimeDTO> startWork(
             @Valid WorkTimeStartRequest request) {
@@ -42,7 +41,7 @@ public class WorkTimeController {
 
     // admin stuff (delete update patch)
 
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'MODERATOR')")
+    @PreAuthorize("hasAnyAuthority('WORKTIME_UPDATE')")
     @PutMapping("/{id}")
     public ResponseEntity<WorkTimeDTO> update(
             @RequestBody WorkTimeDTO workTimeDTO,
@@ -53,7 +52,7 @@ public class WorkTimeController {
         return ResponseEntity.ok(workTimeDTO);
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'MODERATOR')")
+    @PreAuthorize("hasAnyAuthority('WORKTIME_UPDATE')")
     @PatchMapping("/{id")
     public ResponseEntity<WorkTimeDTO> patch(
             @RequestBody WorkTimeDTO workTimeDTO,
@@ -64,7 +63,7 @@ public class WorkTimeController {
         return ResponseEntity.ok(workTimeDTO);
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'MODERATOR')")
+    @PreAuthorize("hasAnyAuthority('WORKTIME_DELETE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
             @PathVariable Long id

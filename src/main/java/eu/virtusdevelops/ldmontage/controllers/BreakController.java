@@ -2,8 +2,7 @@ package eu.virtusdevelops.ldmontage.controllers;
 
 import eu.virtusdevelops.ldmontage.dto.BreakDTO;
 import eu.virtusdevelops.ldmontage.mappers.BreakDTOMapper;
-import eu.virtusdevelops.ldmontage.requests.BreakEndRequest;
-import eu.virtusdevelops.ldmontage.requests.BreakStartRequest;
+import eu.virtusdevelops.ldmontage.requests.BreakRequest;
 import eu.virtusdevelops.ldmontage.services.WorkBreakService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,7 @@ public class BreakController {
 
     @PostMapping("/start")
     public ResponseEntity<BreakDTO> startBreak(
-            @Valid @RequestBody BreakStartRequest request
+            @Valid @RequestBody BreakRequest request
     ) {
         var breakObj = breakService.startBreak(request);
         return ResponseEntity.ok(breakDTOMapper.apply(breakObj));
@@ -32,7 +31,7 @@ public class BreakController {
     @PostMapping("/{break_id}/stop")
     public ResponseEntity<BreakDTO> startBreak(
             @PathVariable(name = "break_id") Long breakId,
-            @Valid @RequestBody BreakEndRequest request
+            @Valid @RequestBody BreakRequest request
     ) {
         var breakObj = breakService.stopBreak(breakId, request);
         return ResponseEntity.ok(breakDTOMapper.apply(breakObj));
