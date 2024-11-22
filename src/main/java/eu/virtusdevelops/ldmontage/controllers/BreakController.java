@@ -4,7 +4,7 @@ import eu.virtusdevelops.ldmontage.dto.BreakDTO;
 import eu.virtusdevelops.ldmontage.mappers.BreakDTOMapper;
 import eu.virtusdevelops.ldmontage.requests.BreakEndRequest;
 import eu.virtusdevelops.ldmontage.requests.BreakStartRequest;
-import eu.virtusdevelops.ldmontage.services.implementations.WorkBreakServiceImpl;
+import eu.virtusdevelops.ldmontage.services.WorkBreakService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class BreakController {
 
-    private final WorkBreakServiceImpl breakService;
+    private final WorkBreakService breakService;
     private final BreakDTOMapper breakDTOMapper;
 
 
@@ -42,7 +42,7 @@ public class BreakController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBreak(
             @PathVariable Long id
-    ){
+    ) {
         breakService.deleteBreak(id);
         return ResponseEntity.noContent().build();
     }
@@ -51,7 +51,7 @@ public class BreakController {
     public ResponseEntity<BreakDTO> put(
             @PathVariable Long id,
             @Valid @RequestBody BreakDTO data
-    ){
+    ) {
         var updated = breakService.updateBreak(id, data);
         return ResponseEntity.ok(breakDTOMapper.apply(updated));
     }
@@ -60,7 +60,7 @@ public class BreakController {
     public ResponseEntity<BreakDTO> patch(
             @PathVariable Long id,
             @Valid @RequestBody BreakDTO data
-    ){
+    ) {
         var updated = breakService.patchBreak(id, data);
         return ResponseEntity.ok(breakDTOMapper.apply(updated));
     }

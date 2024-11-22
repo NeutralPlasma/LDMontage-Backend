@@ -24,11 +24,13 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RestControllerAdvice
-public class RestErrorAdviceHandler extends ResponseEntityExceptionHandler{
+public class RestErrorAdviceHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
@@ -134,7 +136,6 @@ public class RestErrorAdviceHandler extends ResponseEntityExceptionHandler{
                         ex.getMessage()),
                 new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
-
 
 
     @ExceptionHandler({NoSuchElementException.class})

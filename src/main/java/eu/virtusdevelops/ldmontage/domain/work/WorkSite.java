@@ -29,7 +29,6 @@ public class WorkSite {
     private double longitude;
 
 
-
     @EqualsAndHashCode.Exclude
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

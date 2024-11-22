@@ -24,16 +24,17 @@ public class UserWorkServiceImpl implements UserWorkService {
     /**
      * Creates pdf with exported work times for user
      * within specified dates
-     * @param user the user for which to get work time
+     *
+     * @param user  the user for which to get work time
      * @param start from when
-     * @param end to when
+     * @param end   to when
      * @return path to file
      */
     @Override
-    public TemporaryUserFile exportUsersWork(User user, Date start, Date end){
+    public TemporaryUserFile exportUsersWork(User user, Date start, Date end) {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         Document document = new Document();
-        try{
+        try {
             PdfWriter writer = PdfWriter.getInstance(document, os);
             document = setupTemplate(writer, document, "TemplatePath.pdf");
 
@@ -47,8 +48,7 @@ public class UserWorkServiceImpl implements UserWorkService {
             // create new entity for temporary files
 
 
-
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -60,8 +60,8 @@ public class UserWorkServiceImpl implements UserWorkService {
      * Reads the first page of a PDF found at {@param pathToTemplate},
      * imports it as a template into the provided {@param document}.
      *
-     * @param writer Writer instance for the {@param document}.
-     * @param document PDF document where you wish to paste the template.
+     * @param writer         Writer instance for the {@param document}.
+     * @param document       PDF document where you wish to paste the template.
      * @param pathToTemplate Path to the template PDF.
      * @return Updated document with the template imported.
      * @throws IOException If the template document doesn't exist or cannot be opened.

@@ -35,7 +35,6 @@ public class WorkTimeAuditLog {
     private WorkTime workTime;
 
 
-
     // datetime stuff
     @CreatedDate
     @Column(nullable = false, updatable = false)

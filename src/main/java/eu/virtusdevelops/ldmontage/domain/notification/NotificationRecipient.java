@@ -39,7 +39,6 @@ public class NotificationRecipient {
     private Notification notification;
 
 
-
     // datetime stuff
     @Builder.Default
     @CreatedDate

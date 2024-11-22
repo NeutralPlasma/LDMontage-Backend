@@ -10,6 +10,7 @@ public interface WorkBreakService {
 
     /**
      * Creates a new break based on request
+     *
      * @param request parameters for new break
      * @return newly started break
      */
@@ -17,6 +18,7 @@ public interface WorkBreakService {
 
     /**
      * Stops existing break (ends it)
+     *
      * @param breakId id of the break you wish to end
      * @param request request containing end location
      * @return ended break
@@ -25,6 +27,7 @@ public interface WorkBreakService {
 
     /**
      * Deletes existing break
+     *
      * @param breakId id of the break you wish to delete
      */
     @PreAuthorize("@breakMiddleware.canDelete(breakId)")
@@ -32,7 +35,8 @@ public interface WorkBreakService {
 
     /**
      * Updates all the data of the existing break
-     * @param breakId id of the break you wish to update
+     *
+     * @param breakId  id of the break you wish to update
      * @param breakObj new data for the break
      * @return updated break
      */
@@ -41,7 +45,8 @@ public interface WorkBreakService {
 
     /**
      * Partially update break
-     * @param breakId if od the break you wish to patch
+     *
+     * @param breakId  if od the break you wish to patch
      * @param breakObj new data for the break
      * @return patched break
      */

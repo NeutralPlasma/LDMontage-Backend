@@ -14,25 +14,28 @@ public interface WorkTimeService {
 
     /**
      * Starts new work for the user
+     *
      * @param request data
      * @return new work
      */
     @PreAuthorize("@workMiddleware.canWorkAtLocation(request.worksiteId())")
     WorkTime startWork(WorkTimeStartRequest request)
-        throws WorkSiteNotFoundException,
+            throws WorkSiteNotFoundException,
             WorktimeAlreadyInProgressException;
 
     /**
      * Ends existing work for the user
+     *
      * @param request data
      * @return ended worktime
      */
     WorkTime endWorkTime(WorkTimeEndRequest request)
-        throws NoWorkTimeInProgressException;
+            throws NoWorkTimeInProgressException;
 
 
     /**
      * Deletes existing worktime
+     *
      * @param id of the worktime
      */
     @PreAuthorize("hasAnyAuthority('WORKTIME_DELETE')")
@@ -41,7 +44,8 @@ public interface WorkTimeService {
 
     /**
      * Updates worktime based on data provided
-     * @param id of the worktime
+     *
+     * @param id          of the worktime
      * @param workTimeDTO new data
      * @return updated worktime
      */
@@ -50,7 +54,8 @@ public interface WorkTimeService {
 
     /**
      * Partially updates worktime based on data provided
-     * @param id of the worktime
+     *
+     * @param id          of the worktime
      * @param workTimeDTO
      * @return patched worktime
      */

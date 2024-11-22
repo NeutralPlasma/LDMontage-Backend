@@ -34,7 +34,6 @@ public class BreakAuditLog {
     private Break workBreak;
 
 
-
     // datetime stuff
     @CreatedDate
     @Builder.Default

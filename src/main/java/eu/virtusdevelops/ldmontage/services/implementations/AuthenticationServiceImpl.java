@@ -35,9 +35,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     /**
      * Preforms a login, throws exception if unsuccessful.
-     * @see AuthenticationManager
+     *
      * @param request login request
      * @return Login data (token and user)
+     * @see AuthenticationManager
      */
     @Override
     public LoginData login(LoginRequest request) {
@@ -55,6 +56,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     /**
      * Tries to register new users
+     *
      * @param request register request
      * @return the new registered user
      * @throws UsernameTakenException in case username provided is already taken
@@ -86,7 +88,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     /**
      * Generates and saves new user session token that lasts 30 days
-     * @param user for which user to create token
+     *
+     * @param user        for which user to create token
      * @param tokenString the token string used in token
      * @return new session token with 30 day expiration date
      */

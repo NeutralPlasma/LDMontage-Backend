@@ -9,6 +9,7 @@ public interface AuthenticationService {
 
     /**
      * Preforms a login
+     *
      * @param request request information to preform login with
      * @return LoginData (containing token for future requests)
      */
@@ -16,6 +17,7 @@ public interface AuthenticationService {
 
     /**
      * Tries to register new user
+     *
      * @param request register request
      * @return the new registered user
      */

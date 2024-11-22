@@ -4,7 +4,7 @@ import eu.virtusdevelops.ldmontage.dto.WorkTimeDTO;
 import eu.virtusdevelops.ldmontage.mappers.WorkTimeDTOMapper;
 import eu.virtusdevelops.ldmontage.requests.WorkTimeEndRequest;
 import eu.virtusdevelops.ldmontage.requests.WorkTimeStartRequest;
-import eu.virtusdevelops.ldmontage.services.implementations.WorkTimeServiceImpl;
+import eu.virtusdevelops.ldmontage.services.WorkTimeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/worktime")
 public class WorkTimeController {
 
-    private final WorkTimeServiceImpl workTimeService;
+    private final WorkTimeService workTimeService;
     private final WorkTimeDTOMapper workTimeDTOMapper;
     // delete
     // update
@@ -25,7 +25,7 @@ public class WorkTimeController {
 
     @PostMapping("/start")
     public ResponseEntity<WorkTimeDTO> startWork(
-            @Valid WorkTimeStartRequest request){
+            @Valid WorkTimeStartRequest request) {
         var data = workTimeService.startWork(request);
 
         return ResponseEntity.ok(workTimeDTOMapper.apply(data));
@@ -33,7 +33,7 @@ public class WorkTimeController {
 
     @PostMapping("/end")
     public ResponseEntity<WorkTimeDTO> stopWork(
-            @Valid WorkTimeEndRequest request){
+            @Valid WorkTimeEndRequest request) {
         var data = workTimeService.endWorkTime(request);
 
         return ResponseEntity.ok(workTimeDTOMapper.apply(data));
@@ -47,7 +47,7 @@ public class WorkTimeController {
     public ResponseEntity<WorkTimeDTO> update(
             @RequestBody WorkTimeDTO workTimeDTO,
             @PathVariable Long id
-    ){
+    ) {
         // update everything
 
         return ResponseEntity.ok(workTimeDTO);
@@ -58,7 +58,7 @@ public class WorkTimeController {
     public ResponseEntity<WorkTimeDTO> patch(
             @RequestBody WorkTimeDTO workTimeDTO,
             @PathVariable Long id
-    ){
+    ) {
         // only change updated thingies, ignore empty
 
         return ResponseEntity.ok(workTimeDTO);
@@ -68,7 +68,7 @@ public class WorkTimeController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
             @PathVariable Long id
-    ){
+    ) {
         workTimeService.deleteWorkTime(id);
 
 

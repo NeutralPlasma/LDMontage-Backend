@@ -1,8 +1,6 @@
 package eu.virtusdevelops.ldmontage.mappers;
 
-import eu.virtusdevelops.ldmontage.domain.work.BreakAuditLog;
 import eu.virtusdevelops.ldmontage.domain.work.WorkTimeAuditLog;
-import eu.virtusdevelops.ldmontage.dto.BreakAuditLogDTO;
 import eu.virtusdevelops.ldmontage.dto.WorkTimeAuditLogDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,7 +16,7 @@ public class WorkTimeAuditLogDTOMapper implements Function<WorkTimeAuditLog, Wor
     @Override
     public WorkTimeAuditLogDTO apply(WorkTimeAuditLog auditLog) {
         return new WorkTimeAuditLogDTO(
-            auditLog.getId(),
+                auditLog.getId(),
                 auditLog.getFieldName(),
                 auditLog.getOldValue(),
                 auditLog.getNewValue(),

@@ -3,8 +3,6 @@ package eu.virtusdevelops.ldmontage.requests;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 
-import java.util.Date;
-
 public record BreakEndRequest(
         @Max(value = 180, message = "Longitude must be between -180 and 180 degrees!")
         @Min(value = -180, message = "Longitude must be between -180 and 180 degrees!")

@@ -17,7 +17,6 @@ import eu.virtusdevelops.ldmontage.requests.WorkTimeEndRequest;
 import eu.virtusdevelops.ldmontage.requests.WorkTimeStartRequest;
 import eu.virtusdevelops.ldmontage.services.WorkTimeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 

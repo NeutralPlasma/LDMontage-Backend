@@ -3,7 +3,7 @@ package eu.virtusdevelops.ldmontage.controllers;
 import eu.virtusdevelops.ldmontage.dto.WorkDTO;
 import eu.virtusdevelops.ldmontage.mappers.WorkDTOMapper;
 import eu.virtusdevelops.ldmontage.repositories.WorkRepository;
-import eu.virtusdevelops.ldmontage.services.implementations.WorkServiceImpl;
+import eu.virtusdevelops.ldmontage.services.WorkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,10 +19,8 @@ import java.util.Map;
 public class WorkController {
     private final WorkRepository workRepository;
 
-    private final WorkServiceImpl workService;
+    private final WorkService workService;
     private final WorkDTOMapper workDTOMapper;
-
-
 
 
     @GetMapping("/{id}")

@@ -12,5 +12,5 @@ public record BreakDTO(
         List<BreakAuditLogDTO> auditLog,
         Date createdAt,
         Date updatedAt
-)
-{ }
+) {
+}

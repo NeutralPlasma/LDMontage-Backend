@@ -12,15 +12,15 @@ public class PhoneNumberValidator implements ConstraintValidator<PhoneNumber, St
 
     @Override
     public boolean isValid(String phoneNumber, ConstraintValidatorContext constraintValidatorContext) {
-        if(phoneNumber == null){
+        if (phoneNumber == null) {
             return false;
         }
 
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
-        try{
+        try {
             phoneUtil.parse(phoneNumber, "SI");
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }

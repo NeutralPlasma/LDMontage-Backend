@@ -34,7 +34,6 @@ public class SessionToken {
     private User user;
 
 
-
     // datetime stuff
     @Builder.Default
     @CreatedDate

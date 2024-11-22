@@ -12,16 +12,16 @@ public class UserDTOMapper implements Function<User, UserDTO> {
     @Override
     public UserDTO apply(User user) {
         return new UserDTO(
-            user.getId(),
-            user.getEmail(),
-            user.getFirstName(),
-            user.getLastName(),
-            user.getPhone(),
-            user.getBirthDate(),
-            user.isVerified(),
-            user.getCreatedAt(),
-            user.getUpdatedAt(),
-            user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList()
+                user.getId(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getPhone(),
+                user.getBirthDate(),
+                user.isVerified(),
+                user.getCreatedAt(),
+                user.getUpdatedAt(),
+                user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList()
         );
     }
 }

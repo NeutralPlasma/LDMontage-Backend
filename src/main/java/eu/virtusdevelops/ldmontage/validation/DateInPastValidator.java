@@ -1,10 +1,8 @@
 package eu.virtusdevelops.ldmontage.validation;
 
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -24,7 +22,7 @@ public class DateInPastValidator implements ConstraintValidator<DateInPast, Date
 
     @Override
     public boolean isValid(Date date, ConstraintValidatorContext constraintValidatorContext) {
-        if(date == null){
+        if (date == null) {
             return false;
         }
         var current = new Date();
@@ -32,10 +30,7 @@ public class DateInPastValidator implements ConstraintValidator<DateInPast, Date
 
         LocalDateTime dateTimeToValidate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 
-        if(dateTimeToValidate.isBefore(time)){
-            return true;
-        }
-        return false;
+        return dateTimeToValidate.isBefore(time);
     }
 
 }

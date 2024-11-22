@@ -26,7 +26,7 @@ public record RegisterRequest(
         @NotEmpty(message = "Lastname can not be empty.")
         String lastName,
 
-        @DateInPast(daysOffset = 365*15) // at least 15 years old
+        @DateInPast(daysOffset = 365 * 15) // at least 15 years old
         Date birthDate,
 
         @NotEmpty(message = "Phone number can not be empty.")

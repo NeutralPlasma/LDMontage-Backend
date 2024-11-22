@@ -14,9 +14,14 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = DateInPastValidator.class)
 public @interface DateInPast {
     int daysOffset() default 0;
+
     int hoursOffset() default 0;
+
     int minutesOffset() default 0;
+
     String message() default "Invalid date";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

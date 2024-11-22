@@ -22,9 +22,9 @@ public class AdminUserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> get(
             @PathVariable UUID id
-    ){
+    ) {
         var userOpt = userRepository.findById(id);
-        if(userOpt.isEmpty())
+        if (userOpt.isEmpty())
             throw new UserNotFoundException(id);
 
         // maybe return userdto with admin information ?
@@ -32,10 +32,8 @@ public class AdminUserController {
     }
 
 
-
     @PostMapping("/")
-    public ResponseEntity<UserDTO> create(){
-
+    public ResponseEntity<UserDTO> create() {
 
 
         return null;
@@ -44,21 +42,21 @@ public class AdminUserController {
     @DeleteMapping("/{id}")
     public void delete(
             @PathVariable UUID id
-    ){
+    ) {
 
     }
 
     @PutMapping("/{id}")
-    public void update(){
+    public void update() {
 
     }
 
-    @PostMapping ("/{id}/disable")
+    @PostMapping("/{id}/disable")
     public ResponseEntity<UserDTO> disable(
             @PathVariable UUID id
-    ){
+    ) {
         var userOpt = userRepository.findById(id);
-        if(userOpt.isEmpty())
+        if (userOpt.isEmpty())
             throw new UserNotFoundException(id);
 
         var user = userOpt.get();
@@ -68,7 +66,7 @@ public class AdminUserController {
     }
 
     @PatchMapping("/{id}")
-    public void patch(){
+    public void patch() {
 
     }
 }

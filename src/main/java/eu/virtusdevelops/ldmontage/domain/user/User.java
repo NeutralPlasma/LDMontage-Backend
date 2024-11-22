@@ -38,7 +38,6 @@ public class User implements UserDetails {
     private Date birthDate;
 
 
-
     @Column(columnDefinition = "BOOLEAN DEFAULT false")
     private boolean verified;
 
@@ -66,8 +65,6 @@ public class User implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
-
 
 
     // permissions

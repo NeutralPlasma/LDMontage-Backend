@@ -15,10 +15,10 @@ public class WorkMiddleware {
     private final WorkSiteRepository workSiteRepository;
 
 
-    public boolean canWorkAtLocation(long workLocation){
+    public boolean canWorkAtLocation(long workLocation) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         var workLocationOpt = workSiteRepository.findById(workLocation);
-        if(workLocationOpt.isEmpty())
+        if (workLocationOpt.isEmpty())
             return true;
 
         var location = workLocationOpt.get();

@@ -16,7 +16,7 @@ public class BreakDTOMapper implements Function<Break, BreakDTO> {
     @Override
     public BreakDTO apply(Break breakObj) {
         return new BreakDTO(
-            breakObj.getId(),
+                breakObj.getId(),
                 breakObj.getStartTime(),
                 breakObj.getEndTime(),
                 breakObj.getAuditLog().stream().map(breakAuditLogDTOMapper).toList(),

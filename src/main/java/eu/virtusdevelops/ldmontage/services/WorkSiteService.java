@@ -13,6 +13,7 @@ public interface WorkSiteService {
 
     /**
      * Creates new work site based on request
+     *
      * @param request data for new work site
      * @return newly created worksite
      */
@@ -21,8 +22,9 @@ public interface WorkSiteService {
 
     /**
      * Authorizes user to work at specific worksite
+     *
      * @param worksiteId worksite
-     * @param userId user/worker
+     * @param userId     user/worker
      * @return updated worksite
      */
     WorkSite addAuthorizedWorker(long worksiteId, UUID userId)
@@ -31,8 +33,9 @@ public interface WorkSiteService {
 
     /**
      * Removes authorized user from worksite
+     *
      * @param worksiteId worksite
-     * @param workerId user/worker
+     * @param workerId   user/worker
      * @return updated worksite
      */
     WorkSite removeAuthorizedWorker(long worksiteId, UUID workerId)
@@ -41,6 +44,7 @@ public interface WorkSiteService {
 
     /**
      * Deletes existing worksite
+     *
      * @param worksiteId the worksite you wish to delete
      */
     void deleteWorkSite(long worksiteId)

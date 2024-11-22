@@ -12,7 +12,6 @@ import eu.virtusdevelops.ldmontage.requests.BreakEndRequest;
 import eu.virtusdevelops.ldmontage.requests.BreakStartRequest;
 import eu.virtusdevelops.ldmontage.services.WorkBreakService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -25,7 +24,7 @@ public class WorkBreakServiceImpl implements WorkBreakService {
 
 
     @Override
-    public Break startBreak(BreakStartRequest request){
+    public Break startBreak(BreakStartRequest request) {
         // TODO
         // - check if user is currently working
         // - get users active work
@@ -40,19 +39,20 @@ public class WorkBreakServiceImpl implements WorkBreakService {
     /**
      * Ends the existing break
      * throws error if break doesn't exist or is already ended
+     *
      * @param breakId id of the break to end
      * @param request request details (where break ended)
      * @return break object
      */
     @Override
-    public Break stopBreak(Long breakId, BreakEndRequest request){
+    public Break stopBreak(Long breakId, BreakEndRequest request) {
         var breakOpt = breakRepository.findById(breakId);
         if (breakOpt.isEmpty()) {
             throw new BreakNotFoundException(breakId);
         }
 
         var breakObj = breakOpt.get();
-        if(breakObj.getEndTime() != null) {
+        if (breakObj.getEndTime() != null) {
             throw new BreakAlreadyEndedException(breakId);
         }
 
@@ -60,8 +60,8 @@ public class WorkBreakServiceImpl implements WorkBreakService {
 
         breakObj = breakRepository.save(breakObj);
         breakObj.setEndLocation(GPSLocation.builder()
-                        .latitude(request.latitude())
-                        .longitude(request.longitude())
+                .latitude(request.latitude())
+                .longitude(request.longitude())
                 .build());
         breakRepository.save(breakObj);
 
@@ -72,10 +72,11 @@ public class WorkBreakServiceImpl implements WorkBreakService {
     /**
      * Deletes the break if it exists,
      * throws exceptions if not found
+     *
      * @param breakId id of the break to delete
      */
     @Override
-    public void deleteBreak(Long breakId){
+    public void deleteBreak(Long breakId) {
         var breakOpt = breakRepository.findById(breakId);
         if (breakOpt.isEmpty()) {
             throw new BreakNotFoundException(breakId);
@@ -87,12 +88,13 @@ public class WorkBreakServiceImpl implements WorkBreakService {
 
     /**
      * Updates break with new information
-     * @param breakId id of the existing break to update
+     *
+     * @param breakId  id of the existing break to update
      * @param breakObj updated object
      * @return updated break
      */
     @Override
-    public Break updateBreak(long breakId, BreakDTO breakObj){
+    public Break updateBreak(long breakId, BreakDTO breakObj) {
         var breakOpt = breakRepository.findById(breakId);
         if (breakOpt.isEmpty()) {
             throw new BreakNotFoundException(breakId);
@@ -128,12 +130,13 @@ public class WorkBreakServiceImpl implements WorkBreakService {
 
     /**
      * Partially updates data (not all data is changed)
-     * @param breakId id for the existing break to patch
+     *
+     * @param breakId  id for the existing break to patch
      * @param breakObj new data
      * @return updated break
      */
     @Override
-    public Break patchBreak(long breakId, BreakDTO breakObj){
+    public Break patchBreak(long breakId, BreakDTO breakObj) {
 
         var breakOpt = breakRepository.findById(breakId);
         if (breakOpt.isEmpty()) {
@@ -141,7 +144,7 @@ public class WorkBreakServiceImpl implements WorkBreakService {
         }
         var oldBreakObj = breakOpt.get();
 
-        if(breakObj.startTime() != null){
+        if (breakObj.startTime() != null) {
             breakAuditLogRepository.save(
                     BreakAuditLog.builder()
                             .workBreak(oldBreakObj)
@@ -153,7 +156,7 @@ public class WorkBreakServiceImpl implements WorkBreakService {
             oldBreakObj.setStartTime(breakObj.startTime());
         }
 
-        if(breakObj.endTime() != null){
+        if (breakObj.endTime() != null) {
             breakAuditLogRepository.save(
                     BreakAuditLog.builder()
                             .workBreak(oldBreakObj)
