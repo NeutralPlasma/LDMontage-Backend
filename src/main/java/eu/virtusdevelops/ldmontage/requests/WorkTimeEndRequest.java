@@ -5,6 +5,6 @@ import java.util.Date;
 public record WorkTimeEndRequest(
         Date time,
         double longitude,
-        double latitiude
+        double latitude
 ) {
 }

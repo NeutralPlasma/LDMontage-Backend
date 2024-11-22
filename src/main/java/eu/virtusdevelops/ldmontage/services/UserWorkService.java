@@ -1,6 +1,7 @@
 package eu.virtusdevelops.ldmontage.services;
 
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfImportedPage;
 import com.itextpdf.text.pdf.PdfReader;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
 
@@ -53,25 +55,39 @@ public class UserWorkService {
 
 
     /**
-     * Reads first page of pdf found at {@param pathToTemplate}
-     * imports it as template into pdf {@param document}
-     * @param writer writer instance for the {@param document}
-     * @param document pdf document where you wish to paste template
-     * @param pathToTemplate path to the template pdf
-     * @return updated document
-     * @throws IOException if template document doesnt exist
+     * Reads the first page of a PDF found at {@param pathToTemplate},
+     * imports it as a template into the provided {@param document}.
+     *
+     * @param writer Writer instance for the {@param document}.
+     * @param document PDF document where you wish to paste the template.
+     * @param pathToTemplate Path to the template PDF.
+     * @return Updated document with the template imported.
+     * @throws IOException If the template document doesn't exist or cannot be opened.
      */
     private Document setupTemplate(PdfWriter writer, Document document, String pathToTemplate) throws IOException {
+        // Open the document and create a new page
         document.open();
         document.newPage();
 
-        FileInputStream template = new FileInputStream(pathToTemplate);
-        PdfReader reader = new PdfReader(template);
+        PdfReader reader = null;
+        try (FileInputStream templateStream = new FileInputStream(pathToTemplate)) {
+            reader = new PdfReader(templateStream);
 
-        PdfImportedPage page = writer.getImportedPage(reader, 1);
-        PdfContentByte cb = writer.getDirectContent();
-        cb.addTemplate(page, 0, 0);
+            // Import the first page of the template PDF
+            PdfImportedPage page = writer.getImportedPage(reader, 1);
+            PdfContentByte cb = writer.getDirectContent();
+            // Add the imported page as the template to the current document
+            cb.addTemplate(page, 0, 0);
 
+        } catch (FileNotFoundException e) {
+            // Handle the case where the template file is not found
+            throw new IOException("Template file not found: " + pathToTemplate, e);
+        } finally {
+            // Ensure that the resources are closed properly
+            if (reader != null) {
+                reader.close();
+            }
+        }
 
         return document;
     }

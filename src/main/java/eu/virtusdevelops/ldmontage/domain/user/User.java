@@ -91,23 +91,23 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Use a Set to avoid duplicate authorities
+        Set<GrantedAuthority> authorities = new HashSet<>();
 
-        // return authority list from all the role permissions
-        List<GrantedAuthority> authorities = new ArrayList<>();
+        // Add authorities from roles and their permissions
         for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName().toUpperCase()));
             for (Permission permission : role.getPermissions()) {
                 authorities.add(new SimpleGrantedAuthority(permission.getPermission()));
             }
-            authorities.add(new SimpleGrantedAuthority(role.getName().toUpperCase()));
         }
+
+        // Add permissions directly
         for (Permission permission : permissions) {
-            if (authorities.contains(new SimpleGrantedAuthority(permission.getPermission()))) {
-                continue;
-            }
             authorities.add(new SimpleGrantedAuthority(permission.getPermission()));
         }
-        return authorities;
 
+        return authorities;
     }
 
     // work times

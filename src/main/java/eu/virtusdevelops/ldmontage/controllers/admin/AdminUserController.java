@@ -53,7 +53,7 @@ public class AdminUserController {
 
     }
 
-    @PostMapping ("/{id}")
+    @PostMapping ("/{id}/disable")
     public ResponseEntity<UserDTO> disable(
             @PathVariable UUID id
     ){

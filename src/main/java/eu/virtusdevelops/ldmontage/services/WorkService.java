@@ -12,29 +12,21 @@ import org.springframework.stereotype.Service;
 public class WorkService {
     private final WorkRepository workRepository;
 
-
-    public Work getWork(long id){
-        var work = workRepository.findById(id);
-        if(work.isEmpty())
-            throw new WorkNotFoundException(id);
-        return work.get();
+    public Work getWork(long id) {
+        return workRepository.findById(id)
+                .orElseThrow(() -> new WorkNotFoundException(id));
     }
 
-
-    public Work createWork(WorkCreateRequest request){
+    public Work createWork(WorkCreateRequest request) {
         var work = Work.builder()
                 .title(request.title())
                 .build();
-        work = workRepository.save(work);
-        return work;
+
+        return workRepository.save(work);
     }
 
-
-    public void deleteWork(long id){
-        var work = workRepository.findById(id);
-        if(work.isEmpty())
-            throw new WorkNotFoundException(id);
-
-        workRepository.delete(work.get());
+    public void deleteWork(long id) {
+        var work = getWork(id); // Reuse getWork for consistency and avoiding duplicate lookup logic
+        workRepository.delete(work);
     }
 }

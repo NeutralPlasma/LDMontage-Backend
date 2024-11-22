@@ -24,35 +24,26 @@ import java.util.Date;
 @Service
 @RequiredArgsConstructor
 public class WorkTimeService {
+
     private final WorkTimeRepository workTimeRepository;
     private final UserRepository userRepository;
     private final WorkSiteRepository workSiteRepository;
     private final WorkRepository workRepository;
 
-
     @PreAuthorize("@workMiddleware.canWorkAtLocation(request.worksiteId())")
-    public WorkTime startWork(WorkTimeStartRequest request){
-        var user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        var workSiteOpt = workSiteRepository.findById(request.worksiteId());
-        if(workSiteOpt.isEmpty())
-            throw new WorkSiteNotFoundException(request.worksiteId());
+    public WorkTime startWork(WorkTimeStartRequest request) {
+        var user = getCurrentUser();
 
-        var worksite = workSiteOpt.get();
+        var worksite = workSiteRepository.findById(request.worksiteId())
+                .orElseThrow(() -> new WorkSiteNotFoundException(request.worksiteId()));
 
-        var activeWorkOpt = workTimeRepository.findUserActiveWorks(user);
-
-        if(activeWorkOpt.isEmpty())
+        if (workTimeRepository.findUserActiveWorks(user).isPresent()) {
             throw new WorktimeAlreadyInProgressException(user.getId());
+        }
 
-        var currentTime = new Date();
-        var timeDiff = currentTime.getTime() - request.time().getTime();
+        validateTimeDifference(request.time());
 
-        // limit max time diff?
-        var location = GPSLocation
-                .builder()
-                .longitude(request.longitude())
-                .latitude(request.latitiude())
-                .build();
+        var location = createLocation(request.latitude(), request.longitude());
 
         var workTime = WorkTime.builder()
                 .user(user)
@@ -62,41 +53,52 @@ public class WorkTimeService {
                 .build();
 
         return workTimeRepository.save(workTime);
-
     }
 
-    public WorkTime endWorkTime(WorkTimeEndRequest request){
-        var user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public WorkTime endWorkTime(WorkTimeEndRequest request) {
+        var user = getCurrentUser();
 
-        var currentWorkOpt = workTimeRepository.findUserActiveWorks(user);
-        if(currentWorkOpt.isEmpty())
-            throw new NoWorkTimeInProgressException();
+        var currentWorkTime = workTimeRepository.findUserActiveWorks(user)
+                .orElseThrow(NoWorkTimeInProgressException::new);
 
-        var currentWorkTime = currentWorkOpt.get();
-        var location = GPSLocation
-                .builder()
-                .longitude(request.longitude())
-                .latitude(request.latitiude())
-                .build();
+        validateTimeDifference(request.time());
 
-        var currentTime = new Date();
-        var timeDiff = currentTime.getTime() - request.time().getTime();
+        var location = createLocation(request.latitude(), request.longitude());
 
         currentWorkTime.setEndLocation(location);
         currentWorkTime.setEndTime(request.time());
-        
+
         return workTimeRepository.save(currentWorkTime);
-
     }
 
-    public void deleteWorkTime(long id){
+    public void deleteWorkTime(long id) {
+        var workTime = workTimeRepository.findById(id)
+                .orElseThrow(() -> new WorkTimeNotFound(id));
 
-        var workTimeOpt = workTimeRepository.findById(id);
-        if(workTimeOpt.isEmpty())
-            throw new WorkTimeNotFound(id);
-
-        workTimeRepository.delete(workTimeOpt.get());
+        workTimeRepository.delete(workTime);
     }
 
+    // Helper methods
+    private User getCurrentUser() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
 
+    private GPSLocation createLocation(double latitude, double longitude) {
+        return GPSLocation.builder()
+                .latitude(latitude)
+                .longitude(longitude)
+                .build();
+    }
+
+    private void validateTimeDifference(Date requestTime) {
+        var currentTime = new Date();
+        var timeDiff = Math.abs(currentTime.getTime() - requestTime.getTime());
+
+        // Example: If max allowable time diff is 5 minutes
+        long maxAllowedDiff = 5 * 60 * 1000;
+        if (timeDiff > maxAllowedDiff) {
+            throw new IllegalArgumentException("Time difference exceeds the maximum allowable limit.");
+        }
+    }
 }
+

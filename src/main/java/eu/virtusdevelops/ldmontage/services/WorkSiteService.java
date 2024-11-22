@@ -1,6 +1,7 @@
 package eu.virtusdevelops.ldmontage.services;
 
 import eu.virtusdevelops.ldmontage.domain.exceptions.*;
+import eu.virtusdevelops.ldmontage.domain.user.User;
 import eu.virtusdevelops.ldmontage.domain.work.WorkSite;
 import eu.virtusdevelops.ldmontage.repositories.UserRepository;
 import eu.virtusdevelops.ldmontage.repositories.WorkRepository;
@@ -19,12 +20,9 @@ public class WorkSiteService {
     private final WorkSiteRepository workSiteRepository;
     private final UserRepository userRepository;
 
-    public WorkSite createNew(WorkSiteCreateRequest request){
-        var workOpt = workRepository.findById(request.workId());
-        if(workOpt.isEmpty())
-            throw new WorkNotFoundException(request.workId());
-
-        var work = workOpt.get();
+    public WorkSite createNew(WorkSiteCreateRequest request) {
+        var work = workRepository.findById(request.workId())
+                .orElseThrow(() -> new WorkNotFoundException(request.workId()));
 
         var workSite = WorkSite.builder()
                 .title(request.title())
@@ -37,58 +35,52 @@ public class WorkSiteService {
         return workSiteRepository.save(workSite);
     }
 
+    public WorkSite addAuthorizedWorker(long worksiteId, UUID workerId) {
+        var workSite = getWorkSiteById(worksiteId);
+        var user = getUserById(workerId);
 
-    public WorkSite addAuthorizedWorker(long worksiteId, UUID workerId){
-        var worksiteOpt = workSiteRepository.findById(worksiteId);
-        if(worksiteOpt.isEmpty())
-            throw new WorkSiteNotFoundException(worksiteId);
-
-        var userOpt = userRepository.findById(workerId);
-        if(userOpt.isEmpty())
-            throw new UserNotFoundException(workerId);
-
-
-        var user = userOpt.get();
-        var workSite = worksiteOpt.get();
-        if(workSite.getAuthorizedWorkers().contains(user))
+        if (workSite.getAuthorizedWorkers().contains(user)) {
             throw new UserAlreadyAuthorizedOnWorksiteException(user.getId(), workSite.getId());
-
+        }
 
         workSite.getAuthorizedWorkers().add(user);
-        workSite.setUpdatedAt(new Date());
+        updateWorkSiteTimestamp(workSite);
 
         return workSiteRepository.save(workSite);
     }
 
-    public WorkSite removeAuthorizedWorker(long worksiteId, UUID workerId){
-        var worksiteOpt = workSiteRepository.findById(worksiteId);
-        if(worksiteOpt.isEmpty())
-            throw new WorkSiteNotFoundException(worksiteId);
+    public WorkSite removeAuthorizedWorker(long worksiteId, UUID workerId) {
+        var workSite = getWorkSiteById(worksiteId);
+        var user = getUserById(workerId);
 
-        var userOpt = userRepository.findById(workerId);
-        if(userOpt.isEmpty())
-            throw new UserNotFoundException(workerId);
-
-
-        var user = userOpt.get();
-        var workSite = worksiteOpt.get();
-        if(!workSite.getAuthorizedWorkers().contains(user))
+        if (!workSite.getAuthorizedWorkers().contains(user)) {
             throw new UserNotAuthorizedOnWorksite(user.getId(), workSite.getId());
-
+        }
 
         workSite.getAuthorizedWorkers().remove(user);
-        workSite.setUpdatedAt(new Date());
+        updateWorkSiteTimestamp(workSite);
 
         return workSiteRepository.save(workSite);
     }
 
+    public void deleteWorkSite(long worksiteId) {
+        var workSite = getWorkSiteById(worksiteId);
+        workSiteRepository.delete(workSite);
+    }
 
-    public void deleteWorkSite(long worksiteId){
-        var worksiteOpt = workSiteRepository.findById(worksiteId);
-        if(worksiteOpt.isEmpty())
-            throw new WorkSiteNotFoundException(worksiteId);
+    // Helper methods
+    private WorkSite getWorkSiteById(long worksiteId) {
+        return workSiteRepository.findById(worksiteId)
+                .orElseThrow(() -> new WorkSiteNotFoundException(worksiteId));
+    }
 
-        workSiteRepository.delete(worksiteOpt.get());
+    private User getUserById(UUID userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+    }
+
+    private void updateWorkSiteTimestamp(WorkSite workSite) {
+        workSite.setUpdatedAt(new Date());
     }
 
 }

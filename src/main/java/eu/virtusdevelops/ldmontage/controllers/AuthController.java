@@ -52,7 +52,7 @@ public class AuthController {
     private void SetupCookie(HttpServletResponse response, SessionToken token) {
         Cookie cookie = new Cookie(CookieAuthenticationFilter.COOKIE_NAME, token.getToken());
         cookie.setHttpOnly(true);
-        cookie.setDomain("*.virtus.lol");
+        cookie.setDomain("*.ldmontage.eu");
         cookie.setAttribute("SameSite", "Lax");
         cookie.setSecure(true);
         cookie.setPath("/");
